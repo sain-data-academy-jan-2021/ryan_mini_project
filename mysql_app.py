@@ -9,7 +9,6 @@ user = os.environ.get("mysql_user")
 password = os.environ.get("mysql_pass")
 database = os.environ.get("mysql_db")
 
-
 # Establish a database connection
 connection = pymysql.connect(
   host,
