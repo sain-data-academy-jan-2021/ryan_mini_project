@@ -1,4 +1,5 @@
-Product_Number,Product,Price
-1,Fish,2.75
-2,Ham,1.54
-3,Daasd,2.43
+ID,Product,Price
+1,Beef,2.55
+2,Ham,1.24
+4,Gamon,2.13
+5,Chicken,7.12

@@ -3,6 +3,7 @@
 import os
 import tabulate
 import app_data
+import mysql_app
 import app_functions #imports all the functionality if the seperate modules
 
 app_data.products  #brings in the lists from the data module
@@ -18,7 +19,7 @@ def main_menu():
    
      #using ''' means you can write anything you want within it and that's what will be printed in the terminal
     menu = input ('''
-Welcome to RSAIWDBMP v0.3
+Welcome to RSAIWDBMP v0.4
 
 Please select an option by entering a number  
         
@@ -35,15 +36,14 @@ Please select an option by entering a number
             
             if option1 == '1':
                 os.system('clear')
-                app_data.print_table(app_data.products)
+                mysql_app.print_table('product', 'product_price')
                 app_functions.yesno()
                 os.system('clear')
                 continue
                     
             elif option1 == '2':
                 os.system('clear')
-                app_data.print_table(app_data.products)
-                app_functions.add_product()
+                mysql_app.add_entry('product', 'product_price')
                 app_functions.yesno()
                 os.system('clear')
                 continue
@@ -52,7 +52,7 @@ Please select an option by entering a number
                 os.system('clear')
                 update_product = input ('Select Option' '\n1. List of Products' '\n0. Cancel')
                 if update_product == '1':
-                    app_functions.update_item(update_product, app_data.products)
+                    mysql_app.update_entry('product', 'product_price')
                     app_functions.yesno()
                     os.system('clear')
                     continue
@@ -62,9 +62,7 @@ Please select an option by entering a number
 
             elif option1 == '4':
                 os.system('clear')
-                print ('\n'.join(app_data.products))
-                delete_product = input('What product would you like to remove?').title()
-                app_functions.delete_item(delete_product, app_data.products)
+                mysql_app.delete_entry('product')
                 app_functions.yesno()
                 os.system('clear')
                 continue
@@ -86,15 +84,14 @@ Please select an option by entering a number
 
             if option2 == '1':
                 os.system('clear')
-                app_data.print_table(app_data.couriers)
+                mysql_app.print_table('courier', 'contact_number')
                 app_functions.yesno()
                 os.system('clear')
                 continue
 
             elif option2 == '2':
                 os.system('clear')
-                app_data.print_table(app_data.couriers)
-                app_functions.add_courier()
+                mysql_app.add_entry('courier', 'contact_number')
                 app_functions.yesno()
                 os.system('clear')
                 continue
@@ -103,7 +100,7 @@ Please select an option by entering a number
                 os.system('clear')
                 update_courier = input ('Select Option' '\n1. List of Couriers' '\n0. Cancel')
                 if update_courier == '1':
-                    app_functions.update_item(update_courier, app_data.couriers)
+                    mysql_app.update_entry('courier', 'contact_number')
                     app_functions.yesno()
                     os.system('clear')
                     continue
@@ -113,9 +110,7 @@ Please select an option by entering a number
 
             elif option2 == '4':
                 os.system('clear')
-                app_data.print_table(app_data.couriers)
-                delete_courier = input ('Who would you like to remove?').title()
-                app_functions.delete_item(delete_courier, app_data.couriers)
+                mysql_app.delete_entry('courier')
                 app_functions.yesno()
                 os.system('clear')
                 continue
@@ -152,21 +147,28 @@ Please select an option by entering a number
             elif option3 == '3':
                 os.system('clear')
                 update_menu = input ('Select Option' '\n1. List of Orders' '\n0. Cancel')
+                
                 if update_menu == '1':
-                    app_data.print_orders()
+                    app_data.print_table(app_data.orders)
                     update_status = input('Which order would you like to update?')
+                    exsisting_orders = app_functions.list_index(app_data.orders)
+                    while update_status not in exsisting_orders:
+                        print ("Invalid entry, please try again")
+                        update_status = input ('Which order would you like to update?')
                     status_loop = True
                     while status_loop:
-                        status_question = input("Update Status").title()
+                        status_question = input("Is this order, preparing, ready, with courier or delivered?").title()
                         if status_question in app_data.order_status:
                             app_data.orders[int(update_status)-1]['status'] = status_question
                             is_loop = False
                             break
                         else:
                             print('Invalid option please try again')
+                
                     app_functions.yesno()
                     os.system('clear')
                     continue
+                
                 else:
                     os.system('clear')
                     continue
@@ -174,14 +176,13 @@ Please select an option by entering a number
             elif option3 == '4':
                 os.system('clear')
                 update_order = input ('Select Option' '\n1. List of Orders' '\n0. Cancel')
-                
 
                 if update_order == '0':
                     os.system('clear')
                     continue    
                     
                 elif update_order == '1':
-                    app_data.print_orders()
+                    app_data.print_table(app_data.orders)
                     while True: #while loop needed here and not in the functions module as the main menu is also needed within the loop and is not defined in the dunctions module
                         app_functions.edit_order()
                         app_functions.yesno()
@@ -195,10 +196,7 @@ Please select an option by entering a number
 
             elif option3 == '5':
                 os.system('clear')
-                app_data.print_table(app_data.orders)
-                # remove_order = input('Which order would you like to delete?')
-                # del app_data.orders[int(remove_order)-1]
-                app_functions.delete_item(app_data.orders)
+                app_functions.delete_dictionary('order', app_data.orders)
                 app_functions.yesno()
                 os.system('clear')
                 continue
@@ -215,8 +213,8 @@ Please select an option by entering a number
     elif menu == '0':
         os.system('clear')
         print('Thank You' '\nHave a Nice Day')
-        app_data.return_data()  #also needed here as this option does not include the y/n question
-        exit()
+        app_data.return_data('products', 'couriers', 'orders')  #also needed here as this option does not include the y/n question
+        app_functions.system_exit()
     
     else:
         os.system('clear')

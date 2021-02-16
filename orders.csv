@@ -1,4 +1,8 @@
-customer_name,customer_address,customer_phone,courier,status
-Ryan Essam,"38 Warden Abbey, Bedford",234646346,Eve,Ready
-Colin,Dhidho 23 H,9890340270,Simon,With Courier
-Homer Simpson,742 Evergreen Terrace,5550113,Jane,Preparing
+ID,customer_name,customer_address,customer_phone,order,courier,status
+1,Charlie,"7 Lansdown Road, Bristol,mk12 321",234646346,"['1', '3']",4,Ready
+2,Ash Ketchun,"10 Pallet Town, Kanto, P13ACHU", 548375412,['2'],2,With Courier
+3,Homer Simpson,"742 Evergreen Terrace, Springfield, SF1 HMS",5550113,"['2', '3']",2,Preparing
+4,Colin,"23 Kahfas, Qhwklhrq, NJ3 IUY",0128409127401,['1'],2,Preparing
+5,Afs,"2314 Aslfhas, Lrlwhq, NK23 HJF",109274091270423,"['1', '1', '2', '1', '3']",1,Ready
+6,Linda,"12 Hench Road, London, Ln2 Hgf",09835152214,['1'],5,With Courier
+7,Simon,"231 Lashfl, Shlfla, Tr12 Bgs",1092790175,['1'],1,Ready
