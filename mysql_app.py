@@ -68,3 +68,12 @@ def delete_entry(item):
     cursor.execute(f'DELETE FROM {item}s WHERE {item}_ID = {deletion}')
     cursor.close()
     connection.commit()
+
+
+def print_orders():
+
+def add_order():
+
+def update_order():
+
+def delete_order():
