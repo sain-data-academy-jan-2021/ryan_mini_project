@@ -132,14 +132,14 @@ Please select an option by entering a number
 
             if option3 == '1':
                 os.system('clear')
-                app_data.print_table(app_data.orders)
+                mysql_app.print_order()
                 app_functions.yesno()
                 os.system('clear')
                 continue
 
             elif option3 == '2':
                 os.system('clear')
-                app_functions.new_order()
+                mysql_app.add_order()
                 app_functions.yesno()
                 os.system('clear')
                 continue
@@ -149,22 +149,7 @@ Please select an option by entering a number
                 update_menu = input ('Select Option' '\n1. List of Orders' '\n0. Cancel')
                 
                 if update_menu == '1':
-                    app_data.print_table(app_data.orders)
-                    update_status = input('Which order would you like to update?')
-                    exsisting_orders = app_functions.list_index(app_data.orders)
-                    while update_status not in exsisting_orders:
-                        print ("Invalid entry, please try again")
-                        update_status = input ('Which order would you like to update?')
-                    status_loop = True
-                    while status_loop:
-                        status_question = input("Is this order, preparing, ready, with courier or delivered?").title()
-                        if status_question in app_data.order_status:
-                            app_data.orders[int(update_status)-1]['status'] = status_question
-                            is_loop = False
-                            break
-                        else:
-                            print('Invalid option please try again')
-                
+                    mysql_app.update_order_status()
                     app_functions.yesno()
                     os.system('clear')
                     continue
@@ -196,7 +181,7 @@ Please select an option by entering a number
 
             elif option3 == '5':
                 os.system('clear')
-                app_functions.delete_dictionary('order', app_data.orders)
+                mysql_app.delete_entry('order')
                 app_functions.yesno()
                 os.system('clear')
                 continue
@@ -213,7 +198,7 @@ Please select an option by entering a number
     elif menu == '0':
         os.system('clear')
         print('Thank You' '\nHave a Nice Day')
-        app_data.return_data('products', 'couriers', 'orders')  #also needed here as this option does not include the y/n question
+        # app_data.return_data('products', 'couriers', 'orders')  #also needed here as this option does not include the y/n question
         app_functions.system_exit()
     
     else:
