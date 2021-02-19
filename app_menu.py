@@ -6,14 +6,14 @@ import app_data
 import mysql_app
 import app_functions #imports all the functionality if the seperate modules
 
-app_data.products  #brings in the lists from the data module
-app_data.couriers
-app_data.orders
+# app_data.products  #brings in the lists from the data module
+# app_data.couriers
+# app_data.orders
 
 
-app_data.products_file_name
-app_data.couriers_file_name
-app_data.orders_file_name
+# app_data.products_file_name
+# app_data.couriers_file_name
+# app_data.orders_file_name
 
 def main_menu(): 
    
