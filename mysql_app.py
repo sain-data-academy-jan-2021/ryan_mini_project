@@ -9,6 +9,8 @@ user = os.environ.get("mysql_user")
 password = os.environ.get("mysql_pass")
 database = os.environ.get("mysql_db")
 
+
+
 # Establish a database connection
 connection = pymysql.connect(
   host,
@@ -142,6 +144,7 @@ def add_order():
     cursor.close()
     connection.commit()
 
+
     order_ID = execute_sql_select(connection, "select MAX(order_ID) from orders")[0][0]
     for item in items:
             cursor = connection.cursor()
@@ -217,3 +220,7 @@ def list_of_ordered_products():
             ordered_products.append(selected_id)
     
     return ordered_products
+
+
+
+
