@@ -167,13 +167,8 @@ Please select an option by entering a number
                     continue    
                     
                 elif update_order == '1':
-                    app_data.print_table(app_data.orders)
-                    while True: #while loop needed here and not in the functions module as the main menu is also needed within the loop and is not defined in the dunctions module
-                        app_functions.edit_order()
-                        app_functions.yesno()
-                        os.system('clear')
-                        break
-                    continue
+                    mysql_app.edit_order()
+                    
                 else:
                     os.system('clear')
                     print ('\nInvalid entry please try again')
@@ -181,7 +176,7 @@ Please select an option by entering a number
 
             elif option3 == '5':
                 os.system('clear')
-                mysql_app.delete_entry('order')
+                mysql_app.delete_order()
                 app_functions.yesno()
                 os.system('clear')
                 continue

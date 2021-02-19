@@ -79,8 +79,6 @@ def delete_entry(item):
         print_table('product', 'product_price')
     elif item == "courier":
         print_table('courier', 'contact_number')
-    elif item == "order":
-        print_order()
     
     existing_ids = get_ids(item)
     while True:
@@ -183,6 +181,116 @@ def update_order_status():
                     break
                 else:
                     print('Invalid option please try again')
+            break
+
+
+def edit_order():
+    while True:
+        existing_ids = get_ids('order')
+        print_order()
+        deletion = input (f'Select the ID of the order you would like to edit or press 0 to cancel?')
+        
+        if deletion == '0':
+            os.system('clear')
+            break     
+        
+        try:
+            selected_id = int(deletion)
+        except ValueError:
+            print ('Input must be a number')
+            continue
+    
+        if int(selected_id) not in existing_ids:
+            print ('Invalid entry, please try again')
+            continue
+
+        
+        else:
+            while True:
+                question = input ('\n' 'Select Option' '\n' '\n1. Edit Personal Information' '\n2. Edit Courier' '\n3. Edit Products' '\n0. Exit')
+
+                if question == '0':
+                    break
+                
+                if question == '1':
+                    customer_name = input ('Type new name or leave blank to skip').title()
+                    if customer_name == '':
+                        pass
+                    else:
+                        cursor = connection.cursor()
+                        cursor.execute(f'UPDATE orders SET name = "{customer_name}" WHERE order_ID = "{selected_id}";')
+                        cursor.close()
+                        connection.commit()
+                        
+                    customer_address = input ('Type new address or leave blank to skip').title()
+                    if customer_address == '':
+                        pass
+                    else:
+                        cursor = connection.cursor()
+                        cursor.execute(f'UPDATE orders SET name = "{customer_address}" WHERE order_ID = "{selected_id}";')
+                        cursor.close()
+                        connection.commit()
+                    
+                    customer_phone = input ('Type new number or leave blank to skip')
+                    if customer_phone == '':
+                        pass
+                    else:
+                        cursor = connection.cursor()
+                        cursor.execute(f'UPDATE orders SET name = "{customer_phone}" WHERE order_ID = "{selected_id}";')
+                        cursor.close()
+                        connection.commit()
+                
+                if question == '2':
+                    existing_ids = get_ids('courier')
+                    print_table('courier', 'contact_number')
+                    while True:
+                        new_courier = input("Select the number of the courier you would like to use")
+
+                        try:
+                            selected_courier_id = int(new_courier)
+                        except ValueError:
+                            print ('Input must be a number')
+                            continue
+                    
+                        if int(selected_courier_id) not in existing_ids:
+                            print ('Invalid entry, please try again')
+                            continue
+
+                        else:
+                            cursor = connection.cursor()
+                            cursor.execute(f'UPDATE orders SET courier_ID = "{selected_courier_id}" WHERE order_ID = "{selected_id}";')
+                            cursor.close()
+                            connection.commit()
+                            break
+                           
+
+# option 3 edit order
+
+def delete_order():
+    print_order()
+    existing_ids = get_ids('order')
+    while True:
+        deletion = input (f'Select the ID of the order you would like to delete?')
+        try:
+            selected_id = int(deletion)
+        except ValueError:
+            print ('Input must be a number')
+            continue
+    
+        if int(selected_id) not in existing_ids:
+            print ('Invalid entry, please try again')
+            continue
+        
+        else: 
+            cursor = connection.cursor()
+            cursor.execute(f'DELETE FROM basket WHERE order_ID = {selected_id}')
+            cursor.close()
+            connection.commit()
+            
+            cursor = connection.cursor()
+            cursor.execute(f'DELETE FROM orders WHERE order_ID = {selected_id}')
+            cursor.close()
+            connection.commit()
             break
 
 
