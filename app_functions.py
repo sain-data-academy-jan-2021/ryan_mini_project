@@ -24,10 +24,10 @@ def yesno(): #offers the courier the oppotunity to continue using the program or
         if answer == 'Y' or answer == 'N' :
             did_you_answer = True
             if answer == 'Y':
-                #app_data.return_data('products', 'couriers', 'orders')
+                app_data.return_data('products', 'couriers', 'orders')
                 return #returning the function allows you user to continue using the app after selecting yes
             elif answer == 'N':
-                #app_data.return_data('products', 'couriers', 'orders')  
+                app_data.return_data('products', 'couriers', 'orders')  
                 os.system('clear')
                 print ('Thank You' '\nHave a Nice Day')
                 system_exit()          
