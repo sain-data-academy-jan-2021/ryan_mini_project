@@ -262,7 +262,8 @@ def edit_order():
                             cursor.close()
                             connection.commit()
                             break
-                           
+
+                if question == '3'           
 
 # option 3 edit order
 
