@@ -28,14 +28,15 @@ def print_table(item, number):
     print (mytable)
 
 
-def add_entry(item, number):
+def add_entry(item, number, connection):
     print_table(item, number)
-    name = input (f'Insert new {item} name').title()
+    name = input (f'Insert new {item} name ').title()
     value = input (f'Insert {number} for {name}?')
-    cursor = connection.cursor()
-    cursor.execute(f'INSERT INTO {item}s ({item}_name, {number}) VALUES ("{name}", "{value}");')
-    cursor.close()
-    connection.commit()
+    execute_sql(connection, f'INSERT INTO {item}s ({item}_name, {number}) VALUES ("{name}", "{value}")')
+    # cursor = connection.cursor()
+    # cursor.execute(f'INSERT INTO {item}s ({item}_name, {number}) VALUES ("{name}", "{value}");')
+    # cursor.close()
+    # connection.commit()
 
 
 def update_entry(item, number):
@@ -263,9 +264,9 @@ def edit_order():
                             connection.commit()
                             break
 
-                if question == '3'           
+                # if question == '3':           
 
-# option 3 edit order
+# option 3 edit basket
 
 def delete_order():
     print_order()
@@ -301,6 +302,11 @@ def execute_sql_select(connection, action):
     cursor.close()
     return cursor.fetchall()
 
+def execute_sql(connection, statement):
+    cursor = connection.cursor()
+    cursor.execute(statement)
+    cursor.close()
+    connection.commit()
 
 def get_ids(item):
     existing_ids = [id[0] for id in execute_sql_select(connection, f'select {item}_id from {item}s')]

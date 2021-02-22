@@ -1,6 +1,7 @@
 from app_functions import list_index, yesno, add_product
 from app_data import open_files
 from unittest.mock import patch
+from mysql_app import add_entry
 
 def test_list_index():
 
@@ -47,3 +48,23 @@ def test_yesno(mock_return_data, mock_input, mock_system_exit):
     
     mock_return_data.assert_called()
 
+
+@patch("builtins.input")
+@patch("mysql_app.execute_sql")
+@patch("mysql_app.print_table")
+def test_add_item_to_database(mock_print, mock_execute, mock_input):
+
+    # Assemble
+    mock_input.side_effect = ["Banana", 0.65]
+    mock_print.return_value = None
+    expected = (f'INSERT INTO products (product_name, product_price) VALUES ("Banana", "0.65")')
+
+
+    # Act
+    add_entry("product", "product_price", None)
+    # Assert
+    mock_execute.assert_called_with(None, expected)
+
+    print("It worked")
+
+test_add_item_to_database()
