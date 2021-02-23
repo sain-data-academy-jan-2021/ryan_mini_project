@@ -59,9 +59,9 @@ def test_add_item_to_database(mock_print, mock_execute, mock_input):
     mock_print.return_value = None
     expected = (f'INSERT INTO products (product_name, product_price) VALUES ("Banana", "0.65")')
 
-
     # Act
     add_entry("product", "product_price", None)
+    
     # Assert
     mock_execute.assert_called_with(None, expected)
 

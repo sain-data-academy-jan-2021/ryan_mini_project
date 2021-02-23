@@ -39,7 +39,7 @@ def add_entry(item, number, connection):
     # connection.commit()
 
 
-def update_entry(item, number):
+def update_entry(item, number, connection):
     print_table(item, number)
     existing_ids = get_ids(item)
     while True:
@@ -60,18 +60,13 @@ def update_entry(item, number):
             if name == '':
                 pass
             else:
-                cursor = connection.cursor()
-                cursor.execute(f'UPDATE {item}s SET {item}_name = "{name}" WHERE {item}_ID = "{ID}";')
+                execute_sql(connection, f'UPDATE {item}s SET {item}_name = "{name}" WHERE {item}_ID = "{ID}";')
             
             value = input (f'Insert new {number} or leave blank to skip?')
             if value == '':
                 pass
             else:
-                cursor = connection.cursor()
-                cursor.execute(f'UPDATE {item}s SET {number} = "{value}" WHERE {item}_ID = "{ID}";')
-
-            cursor.close()
-            connection.commit()
+                execute_sql(connection, f'UPDATE {item}s SET {number} = "{value}" WHERE {item}_ID = "{ID}";')
             break
 
 

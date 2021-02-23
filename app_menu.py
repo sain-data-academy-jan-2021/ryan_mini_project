@@ -43,7 +43,7 @@ Please select an option by entering a number
                     
             elif option1 == '2':
                 os.system('clear')
-                mysql_app.add_entry('product', 'product_price')
+                mysql_app.add_entry('product', 'product_price', mysql_app.connection)
                 app_functions.yesno()
                 os.system('clear')
                 continue
@@ -52,7 +52,7 @@ Please select an option by entering a number
                 os.system('clear')
                 update_product = input ('Select Option' '\n1. List of Products' '\n0. Cancel')
                 if update_product == '1':
-                    mysql_app.update_entry('product', 'product_price')
+                    mysql_app.update_entry('product', 'product_price', mysql_app.connection)
                     app_functions.yesno()
                     os.system('clear')
                     continue
