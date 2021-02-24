@@ -1,16 +1,22 @@
-#put the actual interface in here
-
 import os
 import tabulate
 import app_data
 import mysql_app
-import app_functions #imports all the functionality if the seperate modules
+import app_functions 
 
-def main_menu(): 
-   
-     #using ''' means you can write anything you want within it and that's what will be printed in the terminal
+app_data.products  #brings in the lists from the data module
+app_data.couriers
+app_data.orders
+
+
+app_data.products_file_name
+app_data.couriers_file_name
+app_data.orders_file_name
+
+def main_menu():
+    os.system('clear') 
     menu = input ('''
-Welcome to RSAIWDBMP v1
+Welcome to RSAIWDBMP v0.3
 
 Please select an option by entering a number  
         
@@ -27,14 +33,14 @@ Please select an option by entering a number
             
             if option1 == '1':
                 os.system('clear')
-                mysql_app.print_table('product', 'product_price')
+                app_data.print_table(app_data.products)
                 app_functions.yesno()
                 os.system('clear')
                 continue
                     
             elif option1 == '2':
                 os.system('clear')
-                mysql_app.add_entry('product', 'product_price', mysql_app.connection)
+                app_functions.add_product()
                 app_functions.yesno()
                 os.system('clear')
                 continue
@@ -43,7 +49,7 @@ Please select an option by entering a number
                 os.system('clear')
                 update_product = input ('Select Option' '\n1. List of Products' '\n0. Cancel')
                 if update_product == '1':
-                    mysql_app.update_entry('product', 'product_price', mysql_app.connection)
+                    app_functions.update_dictionary('Product', 'Price', 'product', app_data.products)
                     app_functions.yesno()
                     os.system('clear')
                     continue
@@ -53,7 +59,7 @@ Please select an option by entering a number
 
             elif option1 == '4':
                 os.system('clear')
-                mysql_app.delete_entry('product', mysql_app.connection)
+                app_functions.delete_dictionary('product', app_data.products)
                 app_functions.yesno()
                 os.system('clear')
                 continue
@@ -75,14 +81,14 @@ Please select an option by entering a number
 
             if option2 == '1':
                 os.system('clear')
-                mysql_app.print_table('courier', 'contact_number')
+                app_data.print_table(app_data.couriers)
                 app_functions.yesno()
                 os.system('clear')
                 continue
 
             elif option2 == '2':
                 os.system('clear')
-                mysql_app.add_entry('courier', 'contact_number', mysql_app.connection)
+                app_functions.add_courier()
                 app_functions.yesno()
                 os.system('clear')
                 continue
@@ -91,7 +97,7 @@ Please select an option by entering a number
                 os.system('clear')
                 update_courier = input ('Select Option' '\n1. List of Couriers' '\n0. Cancel')
                 if update_courier == '1':
-                    mysql_app.update_entry('courier', 'contact_number', mysql_app.connection)
+                    app_functions.update_dictionary("Couriers", "Contact_Number", "courier", app_data.couriers)
                     app_functions.yesno()
                     os.system('clear')
                     continue
@@ -101,7 +107,7 @@ Please select an option by entering a number
 
             elif option2 == '4':
                 os.system('clear')
-                mysql_app.delete_entry('courier', mysql_app.connection)
+                app_functions.delete_dictionary("courier", app_data.couriers)
                 app_functions.yesno()
                 os.system('clear')
                 continue
@@ -123,14 +129,14 @@ Please select an option by entering a number
 
             if option3 == '1':
                 os.system('clear')
-                mysql_app.print_order()
+                app_data.print_table(app_data.orders)
                 app_functions.yesno()
                 os.system('clear')
                 continue
 
             elif option3 == '2':
                 os.system('clear')
-                mysql_app.add_order(mysql_app.connection)
+                app_functions.new_order()
                 app_functions.yesno()
                 os.system('clear')
                 continue
@@ -140,7 +146,7 @@ Please select an option by entering a number
                 update_menu = input ('Select Option' '\n1. List of Orders' '\n0. Cancel')
                 
                 if update_menu == '1':
-                    mysql_app.update_order_status(mysql_app.connection)
+                    app_functions.edit_order_status()
                     app_functions.yesno()
                     os.system('clear')
                     continue
@@ -158,7 +164,7 @@ Please select an option by entering a number
                     continue    
                     
                 elif update_order == '1':
-                    mysql_app.edit_order(mysql_app.connection)
+                    app_functions.edit_order()
                     
                 else:
                     os.system('clear')
@@ -167,7 +173,7 @@ Please select an option by entering a number
 
             elif option3 == '5':
                 os.system('clear')
-                mysql_app.delete_order(mysql_app.connection)
+                app_functions.delete_dictionary("order", app_data.orders)
                 app_functions.yesno()
                 os.system('clear')
                 continue
@@ -184,7 +190,7 @@ Please select an option by entering a number
     elif menu == '0':
         os.system('clear')
         print('Thank You' '\nHave a Nice Day')
-        # app_data.return_data('products', 'couriers', 'orders')  #also needed here as this option does not include the y/n question
+        app_data.return_data('products', 'couriers', 'orders') 
         app_functions.system_exit()
     
     else:
@@ -192,4 +198,4 @@ Please select an option by entering a number
         print ('\nInvalid input, please try again')
         main_menu()
 
-main_menu()
+# main_menu()
