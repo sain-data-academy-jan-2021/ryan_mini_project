@@ -33,10 +33,6 @@ def add_entry(item, number, connection):
     name = input (f'Insert new {item} name ').title()
     value = input (f'Insert {number} for {name}?')
     execute_sql(connection, f'INSERT INTO {item}s ({item}_name, {number}) VALUES ("{name}", "{value}")')
-    # cursor = connection.cursor()
-    # cursor.execute(f'INSERT INTO {item}s ({item}_name, {number}) VALUES ("{name}", "{value}");')
-    # cursor.close()
-    # connection.commit()
 
 
 def update_entry(item, number, connection):
@@ -70,7 +66,7 @@ def update_entry(item, number, connection):
             break
 
 
-def delete_entry(item):
+def delete_entry(item, connection):
     if item == "product":
         print_table('product', 'product_price')
     elif item == "courier":
@@ -90,10 +86,7 @@ def delete_entry(item):
             continue
         
         else: 
-            cursor = connection.cursor()
-            cursor.execute(f'DELETE FROM {item}s WHERE {item}_ID = {selected_id}')
-            cursor.close()
-            connection.commit()
+            execute_sql(connection, f'DELETE FROM {item}s WHERE {item}_ID = {selected_id};')
             break
 
 
@@ -104,7 +97,7 @@ def print_order():
     print (mytable)
 
 
-def add_order():
+def add_order(connection):
     user_name = input ('Insert your name here').title()
     user_address = input ('Insert your address here').title()
     user_phone_number = input ('What is your contact number?')
@@ -133,21 +126,14 @@ def add_order():
 
     user_status = 'Pending'
 
-    cursor = connection.cursor()
-    cursor.execute(f'INSERT INTO orders (name, address, phone_number, courier_ID, status) VALUES ("{user_name}", "{user_address}", "{user_phone_number}", "{user_courier}", "{user_status}" );')
-    cursor.close()
-    connection.commit()
-
+    execute_sql(connection, f'INSERT INTO orders (name, address, phone_number, courier_ID, status) VALUES ("{user_name}", "{user_address}", "{user_phone_number}", "{user_courier}", "{user_status}" );')
 
     order_ID = execute_sql_select(connection, "select MAX(order_ID) from orders")[0][0]
     for item in items:
-            cursor = connection.cursor()
-            cursor.execute(f"INSERT INTO basket (order_ID, product_ID) values ('{order_ID}', '{item}');")
-            cursor.close()
-            connection.commit()
+            execute_sql(connection, f"INSERT INTO basket (order_ID, product_ID) values ('{order_ID}', '{item}');")
+           
 
-
-def update_order_status():
+def update_order_status(connection):
     print_order()
     existing_ids = get_ids('order')
     while True:
@@ -167,12 +153,9 @@ def update_order_status():
             status_loop = True
             order_status = order_status = ["Preparing", "Ready", "With Courier", "Delivered"] 
             while status_loop:
-                status_question = input("Is this order, preparing, ready, with courier or delivered?").title()
+                status_question = input("Is this order preparing, ready, with courier or delivered?").title()
                 if status_question in order_status:
-                    cursor = connection.cursor()
-                    cursor.execute(f'UPDATE orders SET status = "{status_question}" WHERE order_ID = "{selected_id}";')
-                    cursor.close()
-                    connection.commit()
+                    execute_sql(connection, f'UPDATE orders SET status = "{status_question}" WHERE order_ID = "{selected_id}";')
                     status_loop = False
                     break
                 else:
@@ -180,7 +163,7 @@ def update_order_status():
             break
 
 
-def edit_order():
+def edit_order(connection):
     while True:
         existing_ids = get_ids('order')
         print_order()
@@ -213,28 +196,19 @@ def edit_order():
                     if customer_name == '':
                         pass
                     else:
-                        cursor = connection.cursor()
-                        cursor.execute(f'UPDATE orders SET name = "{customer_name}" WHERE order_ID = "{selected_id}";')
-                        cursor.close()
-                        connection.commit()
+                        execute_sql(connection, f'UPDATE orders SET name = "{customer_name}" WHERE order_ID = "{selected_id}";')
                         
                     customer_address = input ('Type new address or leave blank to skip').title()
                     if customer_address == '':
                         pass
                     else:
-                        cursor = connection.cursor()
-                        cursor.execute(f'UPDATE orders SET name = "{customer_address}" WHERE order_ID = "{selected_id}";')
-                        cursor.close()
-                        connection.commit()
+                        execute_sql(connection, f'UPDATE orders SET name = "{customer_address}" WHERE order_ID = "{selected_id}";')
                     
                     customer_phone = input ('Type new number or leave blank to skip')
                     if customer_phone == '':
                         pass
                     else:
-                        cursor = connection.cursor()
-                        cursor.execute(f'UPDATE orders SET name = "{customer_phone}" WHERE order_ID = "{selected_id}";')
-                        cursor.close()
-                        connection.commit()
+                        execute_sql(connection, f'UPDATE orders SET name = "{customer_phone}" WHERE order_ID = "{selected_id}";')
                 
                 if question == '2':
                     existing_ids = get_ids('courier')
@@ -253,17 +227,14 @@ def edit_order():
                             continue
 
                         else:
-                            cursor = connection.cursor()
-                            cursor.execute(f'UPDATE orders SET courier_ID = "{selected_courier_id}" WHERE order_ID = "{selected_id}";')
-                            cursor.close()
-                            connection.commit()
+                            execute_sql(connection, f'UPDATE orders SET courier_ID = "{selected_courier_id}" WHERE order_ID = "{selected_id}";')
                             break
 
                 # if question == '3':           
 
 # option 3 edit basket
 
-def delete_order():
+def delete_order(connection):
     print_order()
     existing_ids = get_ids('order')
     while True:
@@ -279,15 +250,9 @@ def delete_order():
             continue
         
         else: 
-            cursor = connection.cursor()
-            cursor.execute(f'DELETE FROM basket WHERE order_ID = {selected_id}')
-            cursor.close()
-            connection.commit()
+            execute_sql(connection, f'DELETE FROM basket WHERE order_ID = {selected_id}')
             
-            cursor = connection.cursor()
-            cursor.execute(f'DELETE FROM orders WHERE order_ID = {selected_id}')
-            cursor.close()
-            connection.commit()
+            execute_sql(connection, f'DELETE FROM orders WHERE order_ID = {selected_id}')
             break
 
 
@@ -297,11 +262,13 @@ def execute_sql_select(connection, action):
     cursor.close()
     return cursor.fetchall()
 
+
 def execute_sql(connection, statement):
     cursor = connection.cursor()
     cursor.execute(statement)
     cursor.close()
     connection.commit()
+
 
 def get_ids(item):
     existing_ids = [id[0] for id in execute_sql_select(connection, f'select {item}_id from {item}s')]

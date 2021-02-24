@@ -33,8 +33,6 @@ def yesno(): #offers the courier the oppotunity to continue using the program or
                 system_exit()          
 
 
-
-
 def list_index(item_list):
     index_list = []
     for item in item_list:
@@ -125,8 +123,32 @@ def new_order():
     app_data.orders.append(new_order)
 
 
+def edit_order_status():
+    os.system('clear')
+    app_data.print_table(app_data.orders)
+    update_order_status = input ('Which order would you like to edit?')
+    exsisting_orders = list_index(app_data.orders)
+    while update_order_status not in exsisting_orders:
+        print ("Invalid entry, please try again")
+        update_order_status = input ('Which order would you like to edit?')
+    for dict in app_data.orders:
+        if dict['ID'] == update_order_status:
+            status_loop = True
+            order_status = order_status = ["Preparing", "Ready", "With Courier", "Delivered"] 
+            while status_loop:
+                status_question = input("Is this order preparing, ready, with courier or delivered?").title()
+                if status_question in order_status:
+                    dict ['status'] = status_question
+                    status_loop = False
+                    break
+                else:
+                    print('Invalid option please try again')
+            break
+
+
 def edit_order():
-      
+    os.system('clear')
+    app_data.print_table(app_data.orders)
     edit_order = input ('Which order would you like to edit?')
     exsisting_orders = list_index(app_data.orders)
     while edit_order not in exsisting_orders:
