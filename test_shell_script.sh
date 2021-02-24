@@ -4,8 +4,8 @@ set -eu
 
 if pytest -v
 then
-git add test_shell_script.sh
-git commit -m "${1}"
+git add ${1}
+git commit -m "${2}"
 
 else
 echo "Test Failed!!! Canceling Commit"
