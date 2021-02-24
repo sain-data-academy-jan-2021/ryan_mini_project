@@ -17,13 +17,13 @@ Please select an option by entering a number
 1. Product Menu 
 2. Courier Menu 
 3. Order Menu
-0. Exit''') 
+0. Exit ''') 
 
     if menu == '1':
         os.system('clear')
         while True:
             
-            option1 = input ('\n' 'Select Option' '\n' '\n1. Products List' '\n2. Add a Product' '\n3. Update a Product'  '\n4. Remove a Product' '\n0. Main Menu')
+            option1 = input ('\n' 'Select Option' '\n' '\n1. Products List' '\n2. Add a Product' '\n3. Update a Product'  '\n4. Remove a Product' '\n0. Main Menu ')
             
             if option1 == '1':
                 os.system('clear')
@@ -41,7 +41,7 @@ Please select an option by entering a number
 
             elif option1 == '3':
                 os.system('clear')
-                update_product = input ('Select Option' '\n1. List of Products' '\n0. Cancel')
+                update_product = input ('Select Option' '\n1. List of Products' '\n0. Cancel ')
                 if update_product == '1':
                     mysql_app.update_entry('product', 'product_price', mysql_app.connection)
                     app_functions.yesno()
@@ -71,7 +71,7 @@ Please select an option by entering a number
         os.system('clear')
         while True:
 
-            option2 = input ('\nSelect Option' '\n' '\n1. Current Couriers' '\n2. Create New Courier' '\n3. Update Existing Courier' '\n4. Remove a Courier' '\n0. Main Menu')
+            option2 = input ('\nSelect Option' '\n' '\n1. Current Couriers' '\n2. Create New Courier' '\n3. Update Existing Courier' '\n4. Remove a Courier' '\n0. Main Menu ')
 
             if option2 == '1':
                 os.system('clear')
@@ -89,7 +89,7 @@ Please select an option by entering a number
 
             elif option2 == '3':
                 os.system('clear')
-                update_courier = input ('Select Option' '\n1. List of Couriers' '\n0. Cancel')
+                update_courier = input ('Select Option' '\n1. List of Couriers' '\n0. Cancel ')
                 if update_courier == '1':
                     mysql_app.update_entry('courier', 'contact_number', mysql_app.connection)
                     app_functions.yesno()
@@ -119,11 +119,12 @@ Please select an option by entering a number
         os.system('clear')
         while True:
 
-            option3 = input('\n' 'Select Option' '\n' '\n1. Print Orders to Screen' '\n2. Create New Order' '\n3. Update Order Status' '\n4. Edit an Order' '\n5. Delete an Order' '\n0. Main Menu')
+            option3 = input('\n' 'Select Option' '\n' '\n1. Print Orders to Screen' '\n2. Create New Order' '\n3. Update Order Status' '\n4. Edit an Order' '\n5. Delete an Order' '\n0. Main Menu ')
 
             if option3 == '1':
                 os.system('clear')
                 mysql_app.print_order()
+                mysql_app.view_order()
                 app_functions.yesno()
                 os.system('clear')
                 continue
@@ -137,7 +138,7 @@ Please select an option by entering a number
 
             elif option3 == '3':
                 os.system('clear')
-                update_menu = input ('Select Option' '\n1. List of Orders' '\n0. Cancel')
+                update_menu = input ('Select Option' '\n1. List of Orders' '\n0. Cancel ')
                 
                 if update_menu == '1':
                     mysql_app.update_order_status(mysql_app.connection)
@@ -151,7 +152,7 @@ Please select an option by entering a number
                     
             elif option3 == '4':
                 os.system('clear')
-                update_order = input ('Select Option' '\n1. List of Orders' '\n0. Cancel')
+                update_order = input ('Select Option' '\n1. List of Orders' '\n0. Cancel ')
 
                 if update_order == '0':
                     os.system('clear')
