@@ -19,6 +19,23 @@ connection = pymysql.connect(
   database
 )
 
+def execute_sql_select(connection, action):
+    cursor = connection.cursor()
+    cursor.execute(action)
+    cursor.close()
+    return cursor.fetchall()
+
+
+def execute_sql(connection, statement):
+    cursor = connection.cursor()
+    cursor.execute(statement)
+    cursor.close()
+    connection.commit()
+
+
+def get_ids(item):
+    existing_ids = [id[0] for id in execute_sql_select(connection, f'select {item}_id from {item}s')]
+    return existing_ids
 
 
 def print_table(item, number):
@@ -174,7 +191,7 @@ def update_order_status(connection):
             continue
     
         else:
-    
+        
             status_loop = True
             order_status = order_status = ["Preparing", "Ready", "With Courier", "Delivered"] 
             while status_loop:
@@ -308,23 +325,6 @@ def delete_order(connection):
             break
 
 
-def execute_sql_select(connection, action):
-    cursor = connection.cursor()
-    cursor.execute(action)
-    cursor.close()
-    return cursor.fetchall()
-
-
-def execute_sql(connection, statement):
-    cursor = connection.cursor()
-    cursor.execute(statement)
-    cursor.close()
-    connection.commit()
-
-
-def get_ids(item):
-    existing_ids = [id[0] for id in execute_sql_select(connection, f'select {item}_id from {item}s')]
-    return existing_ids
 
 
 def list_of_ordered_products():
