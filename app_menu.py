@@ -185,7 +185,6 @@ Please select an option by entering a number
     elif menu == '0':
         os.system('clear')
         print('Thank You' '\nHave a Nice Day')
-        # app_data.return_data('products', 'couriers', 'orders')  #also needed here as this option does not include the y/n question
         app_functions.system_exit()
     
     else:
