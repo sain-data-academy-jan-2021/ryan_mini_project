@@ -97,7 +97,7 @@ Please select an option by entering a number
                 os.system('clear')
                 update_courier = input ('Select Option' '\n1. List of Couriers' '\n0. Cancel')
                 if update_courier == '1':
-                    app_functions.update_dictionary("Couriers", "Contact_Number", "courier", app_data.couriers)
+                    app_functions.update_dictionary("Courier", "Contact_Number", "courier", app_data.couriers)
                     app_functions.yesno()
                     os.system('clear')
                     continue
