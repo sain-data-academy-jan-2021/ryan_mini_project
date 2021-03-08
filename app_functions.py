@@ -48,7 +48,7 @@ def add_product():
         
     price = float(input('Price?'))
         
-    new_product = dict(ID = product_number, Product = product, Price = price)
+    new_product = dict(ID = str(product_number), Product = product, Price = price)
     app_data.products.append(new_product)
 
 
@@ -60,7 +60,7 @@ def add_courier():
 
     contact_number = input("Insert Courier's Contact Number")
 
-    new_courier = dict(ID = courier_number, Courier = courier, Contact_Number = contact_number)
+    new_courier = dict(ID = str(courier_number), Courier = courier, Contact_Number = contact_number)
     app_data.couriers.append(new_courier)
 
 

@@ -244,13 +244,13 @@ def edit_order(connection):
                     if customer_address == '':
                         pass
                     else:
-                        execute_sql(connection, f'UPDATE orders SET name = "{customer_address}" WHERE order_ID = "{selected_id}";')
+                        execute_sql(connection, f'UPDATE orders SET address = "{customer_address}" WHERE order_ID = "{selected_id}";')
                     
                     customer_phone = input ('Type new number or leave blank to skip ')
                     if customer_phone == '':
                         pass
                     else:
-                        execute_sql(connection, f'UPDATE orders SET name = "{customer_phone}" WHERE order_ID = "{selected_id}";')
+                        execute_sql(connection, f'UPDATE orders SET phone_number = "{customer_phone}" WHERE order_ID = "{selected_id}";')
                 
                 if question == '2':
                     existing_ids = get_ids('courier')
