@@ -22,7 +22,7 @@ def test_add_item_to_database(mock_print, mock_execute, mock_input):
     mock_execute.assert_called_with(None, expected)
 
 
-
+# 
 
 @patch("builtins.input")
 @patch("mysql_app.execute_sql")
